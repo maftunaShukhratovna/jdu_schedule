@@ -35,7 +35,7 @@ RUN composer install
 RUN chmod -R 777 storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
-#RUN php artisan key:generate
-#
-#RUN chown -R www-data:www-data /var/www
-#RUN chmod -R 755 /var/www
+RUN php artisan key:generate
+
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www

@@ -17,7 +17,8 @@ class SubjectTeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'subject_id' => \App\Models\Subject::factory(),
+            'teacher_id' => \App\Models\User::factory(),
         ];
     }
 }

@@ -17,7 +17,8 @@ class GroupStudentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'group_id' => \App\Models\Group::factory(),
+            'student_id' => \App\Models\User::factory(),
         ];
     }
 }

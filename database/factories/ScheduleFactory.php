@@ -17,7 +17,13 @@ class ScheduleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'group_id' => \App\Models\Group::factory(),
+            'room_id' => \App\Models\Room::factory(),
+            'subject_id' => \App\Models\Subject::factory(),
+            'teacher_id' => \App\Models\User::factory(),
+            'pair'=> $this->faker->randomElement(['1', '2', '3', '4', '5', '6']),
+            'day' => $this->faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
+            'date'=> $this->faker->date(),
         ];
     }
 }

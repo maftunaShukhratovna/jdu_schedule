@@ -17,7 +17,8 @@ class GroupSubjectFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'group_id' => \App\Models\Group::factory(),
+            'subject_id' => \App\Models\Subject::factory(),
         ];
     }
 }

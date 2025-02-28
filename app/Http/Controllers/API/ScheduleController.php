@@ -3,33 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\StoreScheduleRequest;
 use Illuminate\Http\Request;
+use App\Models\Schedule;
 
 class ScheduleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(StoreScheduleRequest $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $validator=$request->validated();
+        $schedule = Schedule::query()->where('group_id', $validator['group_id'])
+            ->where('subject_id', $validator['subject_id'])
+            ->where('teacher_id', $validator['teacher_id'])
+            ->where('room_id', $validator['room_id'])
+            ->where('pair', $validator['pair'])
+            ->where('week_day', $validator['week_day'])
+            ->where('date', $validator['date'])
+            ->first();
+        
+        Schedule::create($validator);
+        return response()->json($schedule, 201);
     }
 
     /**

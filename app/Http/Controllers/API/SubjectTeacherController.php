@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteSubjectTeacherRequest;
+use App\Http\Requests\StoreSubjectTeacherRequest;
+use App\Http\Requests\UpdateSubjectTeacherRequest;
 use App\Models\Group;
-use Illuminate\Http\Request;
 
-class GroupTeacherController extends Controller
+class SubjectTeacherController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreSubjectTeacherRequest $request)
     {
-        $validator = $request->validate([
-            'group_id' => 'required|integer|exists:groups,id',
-            'teacher_id' => 'required|integer|exists:teachers,id',
-        ]);
+        $validator = $request->validated();
 
         $group = Group::findOrFail($validator['group_id']);
         $group->teachers()->attach($validator['teacher_id']);
@@ -21,12 +20,9 @@ class GroupTeacherController extends Controller
         return response()->json(['message' => 'Teacher added to group']);
     }
 
-    public function update(Request $request)
+    public function update(UpdateSubjectTeacherRequest $request)
     {
-        $validator = $request->validate([
-            'group_id' => 'required|integer|exists:groups,id',
-            'teacher_id' => 'required|integer|exists:teachers,id',
-        ]);
+        $validator = $request->validated();
 
         $group = Group::findOrFail($validator['group_id']);
         $group->teachers()->sync($validator['teacher_id']);
@@ -34,11 +30,9 @@ class GroupTeacherController extends Controller
         return response()->json(['message' => 'Teacher updated in group']);
     }
 
-    public function destroy(string $id, Request $request)
+    public function destroy(string $id, DeleteSubjectTeacherRequest $request)
     {
-        $validator = $request->validate([
-            'group_id' => 'required|integer|exists:groups,id',
-        ]);
+        $validator = $request->validated();
 
         $group = Group::findOrFail($validator['group_id']);
         $group->teachers()->detach($id);

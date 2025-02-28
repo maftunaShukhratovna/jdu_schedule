@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteRoleUserRequest;
+use App\Http\Requests\StoreRoleUserRequest;
+use App\Http\Requests\UpdateRoleUserRequest;
 use App\Models\User;
-use App\Models\Role;
-use Illuminate\Http\Request;
 
 class RoleUserController extends Controller
 {
@@ -13,12 +14,9 @@ class RoleUserController extends Controller
     {
         return response()->json(User::with('roles')->get());
     }
-    public function store(Request $request)
+    public function store(StoreRoleUserRequest $request)
     {
-        $validator = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'role_id' => 'required|exists:roles,id',
-        ]);
+        $validator = $request->validated();
 
         $user = User::findOrFail($validator['user_id']);
         $user->roles()->attach($validator['role_id']);
@@ -26,12 +24,9 @@ class RoleUserController extends Controller
         return response()->json(['message' => 'Role assigned to user successfully.']);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateRoleUserRequest $request, string $id)
     {
-        $validator = $request->validate([
-            'role_id' => 'required|array',
-            'role_id.*' => 'exists:roles,id',
-        ]);
+        $validator = $request->validated();
 
         $user = User::findOrFail($id);
         $user->roles()->sync($validator['role_id']);
@@ -39,11 +34,9 @@ class RoleUserController extends Controller
         return response()->json(['message' => 'User roles updated successfully.']);
     }
 
-    public function destroy(Request $request, string $id)
+    public function destroy(DeleteRoleUserRequest $request, string $id)
     {
-        $validator = $request->validate([
-            'role_id' => 'required|exists:roles,id',
-        ]);
+        $validator = $request->validated();
 
         $user = User::findOrFail($id);
         $user->roles()->detach($validator['role_id']);

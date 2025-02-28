@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
 use App\Models\Room;
 
 use Illuminate\Http\Request;
@@ -19,10 +21,10 @@ class RoomController extends Controller
         return response()->json($groups);
     }
 
-    public function store(Request $request)
+    public function store(StoreRoomRequest $request)
     {
-        $request->validate(['name' => 'required|string|unique:groups']);
-        $group = Room::create($request->only('name'));
+        $validator=$request->validated();
+        $group = Room::create($validator['name']);
         return response()->json($group, 201);
     }
 
@@ -31,10 +33,11 @@ class RoomController extends Controller
         return response()->json(Room::findOrFail($id));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRoomRequest $request, $id)
     {
+        $validator=$request->validated();
         $group = Room::findOrFail($id);
-        $group->update($request->only('name'));
+        $group->update($validator['name']);
         return response()->json($group);
     }
 

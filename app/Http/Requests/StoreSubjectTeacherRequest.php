@@ -11,7 +11,7 @@ class StoreSubjectTeacherRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreSubjectTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'subject_id' => 'required|integer|exists:subjects,id',
+            'teacher_id' => 'required|integer|exists:users,id',
         ];
     }
 }

@@ -22,7 +22,7 @@ class DeleteSubjectTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+            'subject_id' => 'required|integer|exists:subjects,id',
+            'teacher_id' => 'required|integer|exists:users,id',];
     }
 }

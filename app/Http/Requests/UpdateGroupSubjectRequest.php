@@ -11,7 +11,7 @@ class UpdateGroupSubjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateGroupSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'group_id' => 'required|integer|exists:groups,id',
+            'subject_id' => 'required|integer|exists:subjects,id',
         ];
     }
 }

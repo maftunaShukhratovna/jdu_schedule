@@ -11,7 +11,7 @@ class UpdateGroupStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateGroupStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'group_id' => 'required|integer|exists:groups,id',
+            'student_id' => 'required|integer|exists:users,id',
         ];
     }
 }

@@ -4,25 +4,23 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreScheduleRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateScheduleRequest;
+
 use App\Models\Schedule;
 
 class ScheduleController extends Controller
 {
     public function store(StoreScheduleRequest $request)
     {
-        $validator=$request->validated();
-        $schedule = Schedule::query()->where('group_id', $validator['group_id'])
-            ->where('subject_id', $validator['subject_id'])
-            ->where('teacher_id', $validator['teacher_id'])
-            ->where('room_id', $validator['room_id'])
-            ->where('pair', $validator['pair'])
-            ->where('week_day', $validator['week_day'])
-            ->where('date', $validator['date'])
-            ->first();
+        $validator = $request->validated();
         
-        Schedule::create($validator);
-        return response()->json($schedule, 201);
+        // Yangi jadval yaratish
+        $schedule = Schedule::create($validator);
+
+        return response()->json([
+            'message' => 'Created',
+            'schedule' => $schedule
+        ], 201);
     }
 
     /**
@@ -30,23 +28,32 @@ class ScheduleController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $schedule = Schedule::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        if (!$schedule) {
+            return response()->json(['message' => 'Schedule not found'], 404);
+        }
+
+        return response()->json($schedule);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateScheduleRequest $request, string $id)
     {
-        //
+        $schedule = Schedule::find($id);
+
+        if (!$schedule) {
+            return response()->json(['message' => 'Schedule not found'], 404);
+        }
+
+        $schedule->update($request->validated());
+
+        return response()->json([
+            'message' => 'Updated',
+            'schedule' => $schedule
+        ]);
     }
 
     /**
@@ -54,6 +61,14 @@ class ScheduleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $schedule = Schedule::find($id);
+
+        if (!$schedule) {
+            return response()->json(['message' => 'Schedule not found'], 404);
+        }
+
+        $schedule->delete();
+
+        return response()->json(['message' => 'schedule Deleted']);
     }
 }

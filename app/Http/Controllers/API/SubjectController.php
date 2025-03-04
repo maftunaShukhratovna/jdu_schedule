@@ -24,8 +24,9 @@ class SubjectController extends Controller
     public function store(StoreSubjectRequest $request)
     {
         $validator=$request->validated();
-
-        $subject = Subject::create($validator['name']);
+        $subject = Subject::create([
+            'name' => $validator['name']
+        ]);
         return response()->json($subject, 201);
     }
 
@@ -38,7 +39,9 @@ class SubjectController extends Controller
     {
         $validator=$request->validated();
         $subject = Subject::findOrFail($id);
-        $subject->update($validator['name']);
+        $subject->update([
+            'name' => $validator['name']
+        ]);
         return response()->json($subject);
     }
 

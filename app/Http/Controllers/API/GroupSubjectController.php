@@ -8,6 +8,7 @@ use App\Http\Requests\StoreGroupSubjectRequest;
 use App\Http\Requests\UpdateGroupSubjectRequest;
 use App\Models\Group;
 
+
 class GroupSubjectController extends Controller
 {
     public function store(StoreGroupSubjectRequest $request)
@@ -32,10 +33,10 @@ class GroupSubjectController extends Controller
 
     public function destroy(string $id, DeleteGroupSubjectRequest $request)
     {
-        $validator = $request->validate([
-        ]);
+        $validator = $request->validated();
 
         $group = Group::findOrFail($validator['group_id']);
+        
         $group->subjects()->detach($id);
 
         return response()->json(['message' => 'Subject removed from group']);

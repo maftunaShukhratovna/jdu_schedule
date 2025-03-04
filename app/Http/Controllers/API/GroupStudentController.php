@@ -15,7 +15,7 @@ class GroupStudentController extends Controller
         $validator = $request->validated();
 
         $group = Group::findOrFail($validator['group_id']);
-        $group->students()->attach($validator['student_id']);
+        $group->students()->attach($validator['user_id']);
 
         return response()->json(['message' => 'Student added to group']);
     }
@@ -25,7 +25,7 @@ class GroupStudentController extends Controller
         $validator = $request->validated();
 
         $group = Group::findOrFail($validator['group_id']);
-        $group->students()->sync($validator['student_id']);
+        $group->students()->sync($validator['user_id']);
 
         return response()->json(['message' => 'Group students updated']);
     }

@@ -10,6 +10,7 @@ use App\Http\Controllers\API\RoleUserController;
 use App\Http\Controllers\API\GroupStudentController;
 use App\Http\Controllers\API\GroupSubjectController;
 use App\Http\Controllers\API\SubjectTeacherController;
+use App\Http\Controllers\API\ScheduleController;
 
 
 
@@ -30,6 +31,7 @@ Route::resource('group-subject', GroupSubjectController::class);
 Route::resource('subject', SubjectController::class);
 Route::resource('subject-teacher', SubjectTeacherController::class);
 Route::resource('role-user', RoleUserController::class);
+Route::resource('schedule', ScheduleController::class);
 
 
 Route::get('/user', function (Request $request) {

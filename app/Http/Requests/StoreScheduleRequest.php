@@ -27,8 +27,9 @@ class StoreScheduleRequest extends FormRequest
             'teacher_id' => 'required|integer|exists:users,id',
             'room_id' => 'required|integer|exists:rooms,id',
             'pair'=> 'required|integer|between:1,7',
-            'week_day'=>'required|string|in:Mon,Tue,Wed,Thu,Fri,Sat,Sun', 
-            'date'=>'required|date',
+            'week_day' => 'required|string|in:monday,tuesday,wednesday,thursday,friday,saturday', 
+            'date' => 'required|date',
         ];
+        
     }
 }

@@ -24,7 +24,10 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {
         $validator=$request->validated();
-        $group = Room::create($validator['name']);
+        $group = Room::create([
+            'name' => $validator['name']
+        ]);
+        
         return response()->json($group, 201);
     }
 
@@ -37,7 +40,9 @@ class RoomController extends Controller
     {
         $validator=$request->validated();
         $group = Room::findOrFail($id);
-        $group->update($validator['name']);
+        $group->update([
+            'name' => $validator['name']
+        ]);
         return response()->json($group);
     }
 

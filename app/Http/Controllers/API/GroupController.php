@@ -24,7 +24,10 @@ class GroupController extends Controller
     public function store(StoreGroupRequest $request)
     {
         $validator=$request->validated();
-        $group = Group::create($validator['name']);
+        $group = Group::create([
+            'name' => $validator['name']
+        ]);
+
         return response()->json($group, 201);
     }
 
@@ -37,7 +40,9 @@ class GroupController extends Controller
     {
         $validator=$request->validated();
         $group = Group::findOrFail($id);
-        $group->update($validator['name']);
+        $group->update([
+            'name' => $validator['name']
+        ]);
         return response()->json($group);
     }
 

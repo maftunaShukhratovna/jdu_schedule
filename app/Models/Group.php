@@ -13,12 +13,12 @@ class Group extends Model
         'name',
     ];
 
-    public function subject()
+    public function subjects()
     {
         return $this->belongsToMany(Subject::class);
     }
 
     public function students(){
-        return $this->belongsToMany(User::class,'group_student','group_id','student_id');
+        return $this->belongsToMany(User::class,'group_student','group_id','user_id');
     }
 }

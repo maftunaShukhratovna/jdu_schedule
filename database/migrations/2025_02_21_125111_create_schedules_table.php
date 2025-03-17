@@ -18,9 +18,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('room_id')->constrained()->onDelete('cascade');
             $table->integer('pair');
-            $table->enum('week_day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
-            ->charset('utf8mb4')
-            ->collation('utf8mb4_unicode_ci');
+            $table->enum('week_day', ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']);
             $table->date('date');
             $table->unique(['group_id', 'subject_id', 'teacher_id', 'room_id', 'pair', 'week_day', 'date'], 'schedule_unique');
             $table->timestamps();

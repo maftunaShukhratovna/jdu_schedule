@@ -22,7 +22,7 @@ class ScheduleFactory extends Factory
             'subject_id' => \App\Models\Subject::factory(),
             'teacher_id' => \App\Models\User::factory(),
             'pair'=> $this->faker->randomElement(['1', '2', '3', '4', '5', '6']),
-            'week_day' => $this->faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
+            'week_day' => $this->faker->randomElement(['monday', 'tuesday', 'wednesday', 'thursday', 'friday']),
             'date'=> $this->faker->date(),
         ];
     }
